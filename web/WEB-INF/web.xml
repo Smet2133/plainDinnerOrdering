@@ -1,0 +1,40 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+    <servlet>
+        <servlet-name> Calc_Servlet </servlet-name>
+        <servlet-class>calc.CalcServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> Login_servlet </servlet-name>
+        <servlet-class>calc.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> Logout_servlet </servlet-name>
+        <servlet-class>calc.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> Ajax.do </servlet-name>
+        <servlet-class>calc.Ajax</servlet-class>
+    </servlet>
+
+
+
+    <servlet-mapping>
+        <servlet-name> Calc_Servlet </servlet-name>
+        <url-pattern>/Calc.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> Login_servlet </servlet-name>
+        <url-pattern>/Authorization.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> Logout_servlet </servlet-name>
+        <url-pattern>/Logout.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> Ajax.do </servlet-name>
+        <url-pattern>/Ajax.do</url-pattern>
+    </servlet-mapping>
+</web-app>
