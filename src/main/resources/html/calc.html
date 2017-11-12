@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="htmlRes/calcStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#load').click(function () {
+//                $('#debug').html($("#operation").val())
+                $.ajax({
+                    url: "Ajax.do",
+                    type: "POST",
+                    data: ({arg1: $("#arg1").val(), arg2: $("#arg2").val(), operation: $("#operation").val()}),
+                    success: function (result) {
+                        $('#result').html(result);
+                    }
+                });
+            });
+        });
+
+        /*
+        $(document).ready(function () {
+            $('#bttHello').click(function () {
+                var fullname = $('#fullname').val();
+                $('#fullname').val('aaa');
+                $.ajax({
+                    url: "Ajax.do",
+                    type: "POST",
+                    data: ({fullname: fullname}),
+                    success: function (result) {
+                        $('#result1').html(result);
+                    }
+            });
+        });
+        });
+        */
+    </script>
+
+</head>
+<body>
+    <p class="title">Calculator</p>
+    <form  class="border" method="GET"
+          action="Calc.do">
+        <label>${notification}</label> <br>
+        <span class="text"> Argument 1: </span>
+        <input id= "arg1" type="text" name="arg1" ${arg1Value}>
+        <br>
+        <span class="text">  Argument 2: </span>
+
+        <input id= "arg2" type="text" name="arg2" ${arg2Value}>
+        <br>
+        <span class="text">  Operation: </span>
+
+        <select id="operation"  name="operation">
+            <option value="+" ${plusSelected}> + </option>
+            <option value="-" ${minusSelected}> - </option>
+            <option value="*" ${multSelected}> * </option>
+            <option value="/" ${divSelected}> / </option>
+        </select>
+        <br>
+        <span class="result">Result: </span><span class="result" id="result">${result}</span>
+        <br><br>
+        <button type="submit">Get result using reload of whole page</button>
+        <!--<input  type="SUBMIT" >-->
+
+
+    </form>
+    <br>
+
+    <div class="border">
+        <button id="load">Get result using AJAX</button>
+        <br><br>
+    </div>
+
+    <form class="border" method="POST" action="Logout.do">
+        <span class="text">Hello ${userName}</span> <br>
+        <button>Logout</button>
+    </form>
+
+
+    <span id="debug"></span>
+<!--
+    <form>
+        name <input type="text" id="fullname">
+        <input type="button" value="hello" id="bttHello">
+        <br>
+        <span id="result1"></span>
+    </form>
+    -->
+
+
+</body>
+</html>
