@@ -3,6 +3,7 @@ package calc;
 import calc.db.JDBCconfig;
 import calc.db.JdbcTemplateMy1;
 import calc.db.JdbcTemplateMy2;
+import calc.db.ResultSetHandler;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -54,7 +55,19 @@ public class LoginServlet extends HttpServlet {
             return true;
         else
             return false;*/
-        if((int)(long)jdbcTemplateMy2.queryForObject(sql, new String[]{login, password}) == 1)
+/*        if((int)(long)jdbcTemplateMy2.queryForObject(sql, new String[]{login, password}) == 1)
+            return true;
+        else
+            return false;*/
+
+        ResultSetHandler<Integer> resultSetHandler = (resultSet) -> {
+            Integer integer = null;
+            resultSet.next();
+            integer = resultSet.getInt(1);
+            return integer;
+        };
+        int i = jdbcTemplateMy2.selectWithMethod(sql, new String[]{login, password}, resultSetHandler);
+        if(i == 1)
             return true;
         else
             return false;
