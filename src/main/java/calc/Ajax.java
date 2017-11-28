@@ -10,6 +10,11 @@ import java.io.PrintWriter;
 public class Ajax extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        if(request.getSession().getAttribute("login") == null){
+            response.sendRedirect("Authorization.do");
+        }
+
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
 
@@ -42,6 +47,6 @@ public class Ajax extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //doPost(request,response);
+        doPost(request,response);
     }
 }

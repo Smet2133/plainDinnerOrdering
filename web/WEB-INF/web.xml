@@ -5,6 +5,10 @@
     <servlet>
         <servlet-name> Calc_Servlet </servlet-name>
         <servlet-class>calc.CalcServlet</servlet-class>
+        <init-param>
+            <param-name>log4j-properties-location</param-name>
+            <param-value>WEB-INF/classes/log4j.properties</param-value>
+        </init-param>
     </servlet>
     <servlet>
         <servlet-name> Login_servlet </servlet-name>

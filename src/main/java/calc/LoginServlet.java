@@ -1,7 +1,9 @@
 package calc;
 
 import calc.db.JDBCconfig;
-import org.springframework.jdbc.core.JdbcTemplate;
+import calc.db.JdbcTemplateMy1;
+import calc.db.JdbcTemplateMy2;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,16 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 public class LoginServlet extends HttpServlet {
+    private static Logger logger = Logger.getLogger(CalcServlet.class);
+
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Properties properties = Utilities.getProperties();
-        String fileString;
 
         if(isAuthorized(request)){
             //redirect
@@ -45,10 +44,17 @@ public class LoginServlet extends HttpServlet {
     }
 
     private boolean loginApproved(String login, String password) {
-        JdbcTemplate jdbcTemplate= JDBCconfig.getJdbcTemplate();
+//        JdbcTemplateMy1 jdbcTemplate1= JDBCconfig.getJdbcTemplate();
+        JdbcTemplateMy1 jdbcTemplateMy1= new JdbcTemplateMy1();
+        JdbcTemplateMy2 jdbcTemplateMy2 = new JdbcTemplateMy2();
         String sql = "SELECT COUNT(*) FROM USERS WHERE email = ? AND password = ?";
 
-        if(jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{login, password}) == 1)
+        //if(jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{login, password}) == 1)
+/*        if(jdbcTemplateMy1.queryForInt(sql, new String[]{login, password}) == 1)
+            return true;
+        else
+            return false;*/
+        if((int)(long)jdbcTemplateMy2.queryForObject(sql, new String[]{login, password}) == 1)
             return true;
         else
             return false;

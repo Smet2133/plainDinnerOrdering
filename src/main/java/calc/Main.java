@@ -1,8 +1,8 @@
 package calc;
 
 import calc.db.JDBCconfig;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.apache.log4j.Logger;
+
 
 import java.io.IOException;
 import java.sql.DriverManager;
@@ -13,7 +13,10 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        String s = Main.class.getClassLoader().getResource("myDB.mv.db").toString();
+        final Logger logger = Logger.getLogger(Main.class);
+        logger.info("In get");
+
+/*        String s = Main.class.getClassLoader().getResource("myDB.mv.db").toString();
         System.out.println(s);
         s = s.replaceAll(".mv.db", "");
         s = "jdbc:h2:" + s;
@@ -30,7 +33,7 @@ public class Main {
 
         String sql = "SELECT COUNT(*) FROM USERS WHERE email = ? AND password = ?";
         jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{"user", "pass"});
-        System.out.println(jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{"user@mail.ru", "pass"}));
+        System.out.println(jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{"user@mail.ru", "pass"}));*/
 
 /*        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("org.h2.Driver");
