@@ -86,48 +86,6 @@ public class CalcServlet extends HttpServlet {
         hmap.put("\\$\\{userName}", (String)request.getSession().getAttribute("login"));
 
         printResponse(response, hmap);
-/*
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Calculator</title>\n      <link rel=\"stylesheet\" type=\"text/css\" href=\"calcStyle.css\">" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <p>Calculator</p>\n" +
-                "    <form method=\"GET\"\n" +
-                "          action=\"Calc.do\">\n" +
-                "    <div class=\"container\">" +
-                "        Argument 1:\n");
-
-        out.println(" <input type=\"text\" name=\"arg1\" value=\"" + arg1Value + "\"> ");
-        out.println("  <br>\n" +
-                "        Argument 2:");
-        out.println(" <input type=\"text\" name=\"arg2\" value=\"" + arg2Value + "\"> <br>");
-        out.println("Operation:\n" +
-                "        <select name=\"operation\" value=\"" + operationValue + "\">\n" +
-                "            <option value=\"+\" " + ((operationValue.equals("+")) ? "selected" : "") + "> + </option>\n" +
-                "            <option value=\"-\" " + ((operationValue.equals("-")) ? "selected" : "") + "> - </option>\n" +
-                "            <option value=\"*\" " + ((operationValue.equals("*")) ? "selected" : "") + "> * </option>\n" +
-                "            <option value=\"/\" " + ((operationValue.equals("/")) ? "selected" : "") + "> / </option>\n" +
-                "        </select>\n" +
-                "        <br>");
-        out.println("Result:\n" + result +
-                "        <br><br>\n" +
-                "        <input type=\"SUBMIT\">\n" +
-                "        </div>" +
-                "    </form>\n<br><br>" +
-                "\n" +
-                "\n" +
-                      "Login:"  + request.getSession().getAttribute("login") +
-                "<form method=\"POST\"\n" +
-                "action=\"Logout.do\">\n" +
-                "<input type=\"SUBMIT\" value=\"logout\">\n" +
-                "</form>" +
-                "</body>\n" +
-                "</html>");*/
 
     }
 
@@ -142,6 +100,9 @@ public class CalcServlet extends HttpServlet {
             fileString = fileString.replaceAll(s, hmap.get(s));
         }
         out.println(fileString);
+
+
+
         out.close();
     }
 

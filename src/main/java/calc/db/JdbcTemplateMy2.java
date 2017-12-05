@@ -79,6 +79,35 @@ public class JdbcTemplateMy2 {
         return smthToReturn;
     }
 
+    public void queryWithoutResultset(String sql, String[] strings){
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DriverManager.getConnection(Url, Username, Password);
+            statement = connection.prepareStatement(sql);
+            for(int i = 0; i < strings.length; i++){
+                statement.setString(i + 1, strings[i]);
+            }
+            statement.executeQuery();
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            //finally block used to close resources
+            try{
+                if(statement!=null)
+                    statement.close();
+            }catch(SQLException se2){
+            }// nothing we can do
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+    }
+
     public Object queryForObject(String sql, String[] strings){
         Connection connection = null;
         PreparedStatement statement = null;

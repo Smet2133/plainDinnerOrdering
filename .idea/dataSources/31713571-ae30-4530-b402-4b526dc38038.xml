@@ -11,7 +11,7 @@
       <Visible>1</Visible>
     </schema>
     <table id="5" parent="4" name="USERS"/>
-    <column id="6" parent="5" name="EMAIL">
+    <column id="6" parent="5" name="LOGIN">
       <Position>1</Position>
       <DataType>VARCHAR(100)|12</DataType>
       <NotNull>1</NotNull>
@@ -20,9 +20,14 @@
       <Position>2</Position>
       <DataType>VARCHAR(50)|12</DataType>
     </column>
-    <key id="8" parent="5" name="CONSTRAINT_4">
+    <column id="8" parent="5" name="ROLE">
+      <Position>3</Position>
+      <DataType>VARCHAR(50)|12</DataType>
+      <DefaultExpression>&apos;user&apos;</DefaultExpression>
+    </column>
+    <key id="9" parent="5" name="CONSTRAINT_4">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>EMAIL</ColNames>
+      <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 //        JdbcTemplateMy1 jdbcTemplate1= JDBCconfig.getJdbcTemplate();
         JdbcTemplateMy1 jdbcTemplateMy1= new JdbcTemplateMy1();
         JdbcTemplateMy2 jdbcTemplateMy2 = new JdbcTemplateMy2();
-        String sql = "SELECT COUNT(*) FROM USERS WHERE email = ? AND password = ?";
+        String sql = "SELECT COUNT(*) FROM USERS WHERE login = ? AND password = ?";
 
         //if(jdbcTemplate.queryForObject(sql, Integer.class, new Object[]{login, password}) == 1)
 /*        if(jdbcTemplateMy1.queryForInt(sql, new String[]{login, password}) == 1)

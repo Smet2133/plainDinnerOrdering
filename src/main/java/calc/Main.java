@@ -1,5 +1,6 @@
 package calc;
 
+import calc.dao.H2UserDao;
 import calc.db.JDBCconfig;
 import org.apache.log4j.Logger;
 
@@ -13,8 +14,13 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+
+        System.out.println(new H2UserDao().getByLogin("user@mail.ru"));
+        System.out.println(new H2UserDao().getByLoginPassword("user@mail.ru", "pass"));
+        System.out.println();
+/*
         final Logger logger = Logger.getLogger(Main.class);
-        logger.info("In get");
+        logger.info("In get");*/
 
 /*        String s = Main.class.getClassLoader().getResource("myDB.mv.db").toString();
         System.out.println(s);
