@@ -1,12 +1,28 @@
 package calc.entities;
 
+import calc.annotations.Column;
+import calc.annotations.Entity;
+import calc.annotations.Id;
+import calc.annotations.Table;
+
+
+@Entity
+@Table(name = "USERS")
 public class UserEntity {
-    private String login;
-    private String password;
-    private String role;
+    @Id
+    @Column(name = "LOGIN")
+    public String login;
+    @Column(name = "PASSWORD")
+    public String password;
+    @Column(name = "ROLE")
+    public String role;
+
 
     public UserEntity() {
     }
+
+
+
 
     public UserEntity(String login, String password, String role) {
         this.login = login;

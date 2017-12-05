@@ -1,11 +1,17 @@
 package calc;
 
+import calc.annotations.Entity;
+import calc.annotations.Table;
+import calc.dao.GenericDao;
 import calc.dao.H2UserDao;
 import calc.db.JDBCconfig;
+import calc.entities.UserEntity;
 import org.apache.log4j.Logger;
 
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +20,10 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+        GenericDao<UserEntity> genericDaoUser = new GenericDao(UserEntity.class);
+        UserEntity userEntity = genericDaoUser.getById("user@mail.ru");
+        System.out.println(genericDaoUser.getById("user@mail.ru"));
+//        Entity annotation = UserEntity.class.getDeclaredAnnotation(Entity.class);
 
         System.out.println(new H2UserDao().getByLogin("user@mail.ru"));
         System.out.println(new H2UserDao().getByLoginPassword("user@mail.ru", "pass"));
