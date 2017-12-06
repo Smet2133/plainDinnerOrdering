@@ -5,7 +5,6 @@ import calc.annotations.Id;
 import calc.annotations.Table;
 import calc.db.JdbcTemplateMy2;
 import calc.db.ResultSetHandler;
-import calc.entities.UserEntity;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -21,7 +20,7 @@ public class GenericDao<T> {
     String idColumn;
     Field idField;
     HashMap<Field, String> fieldColumns = new HashMap<>();
-    ResultSetHandler<T> rsHandler;
+    ResultSetHandler<T> rsHandlerForOne;
 
     public GenericDao(Class<T> clazz){
 
@@ -45,7 +44,7 @@ public class GenericDao<T> {
             }
         }
 
-        rsHandler = (resultSet) -> {
+        rsHandlerForOne = (resultSet) -> {
             T entity = null;
             if (resultSet.next()) {
                 try {
@@ -63,14 +62,24 @@ public class GenericDao<T> {
             return entity;
         };
 
+    }
+
+    public ArrayList<T> getByParameters(Field[] fields, String[] values){
+        ArrayList<T> list = new ArrayList<>();
+        sql = "SELECT * FROM" + table + " WHERE ";
+        if(fields.length < 1){
+            return null;
+        }
+
+
 
 
     }
 
     public T getById(String login) {
 
-        sql = "SELECT * FROM " + table +" WHERE LOGIN = ?";
-        T t= jdbcTemplateMy2.selectWithMethod(sql, new String[]{login}, rsHandler);
+        sql = "SELECT * FROM " + table + " WHERE " + idColumn + " = ?";
+        T t= jdbcTemplateMy2.selectWithMethod(sql, new String[]{login}, rsHandlerForOne);
         return t;
     }
 }

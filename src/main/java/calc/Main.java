@@ -22,6 +22,7 @@ public class Main {
 
         GenericDao<UserEntity> genericDaoUser = new GenericDao(UserEntity.class);
         UserEntity userEntity = genericDaoUser.getById("user@mail.ru");
+        System.out.println(userEntity.login.toString() + userEntity.password.toString() + userEntity.role);
         System.out.println(genericDaoUser.getById("user@mail.ru"));
 //        Entity annotation = UserEntity.class.getDeclaredAnnotation(Entity.class);
 
