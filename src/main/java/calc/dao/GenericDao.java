@@ -51,6 +51,7 @@ public class GenericDao<T> {
                     entity = clazz.newInstance();
 
                     for(Field field: entity.getClass().getDeclaredFields()){
+                        field.setAccessible(true);
                         field.set(entity, resultSet.getString(fieldColumns.get(field)));
                     }
                 } catch (InstantiationException e) {
@@ -70,6 +71,7 @@ public class GenericDao<T> {
         if(fields.length < 1){
             return null;
         }
+        return null;
 
 
 
