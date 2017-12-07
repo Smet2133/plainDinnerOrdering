@@ -21,6 +21,8 @@ public class GenericDao<T> {
     Field idField;
     HashMap<Field, String> fieldColumns = new HashMap<>();
     ResultSetHandler<T> rsHandlerForOne;
+    ResultSetHandler<ArrayList<T>> rsHandlerForMany;
+
 
     public GenericDao(Class<T> clazz){
 
@@ -49,7 +51,6 @@ public class GenericDao<T> {
             if (resultSet.next()) {
                 try {
                     entity = clazz.newInstance();
-
                     for(Field field: entity.getClass().getDeclaredFields()){
                         field.setAccessible(true);
                         field.set(entity, resultSet.getString(fieldColumns.get(field)));
@@ -63,19 +64,46 @@ public class GenericDao<T> {
             return entity;
         };
 
+        rsHandlerForMany = (resultSet) -> {
+            ArrayList<T> list = new ArrayList<>();
+            T entity = null;
+            while(resultSet.next()) {
+                try {
+                    entity = clazz.newInstance();
+                    for(Field field: entity.getClass().getDeclaredFields()){
+                        field.setAccessible(true);
+                        field.set(entity, resultSet.getString(fieldColumns.get(field)));
+                    }
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                list.add(entity);
+            }
+            return list;
+        };
+
     }
 
     public ArrayList<T> getByParameters(Field[] fields, String[] values){
-        ArrayList<T> list = new ArrayList<>();
-        sql = "SELECT * FROM" + table + " WHERE ";
+        sql = "SELECT * FROM " + table + " WHERE ";
         if(fields.length < 1){
             return null;
         }
-        return null;
 
+        sql += fieldColumns.get(fields[0]) + " = ? ";
 
+        if(fields.length > 1){
+            for(int i = 1; i < fields.length; i++){
+                sql += " AND " + fieldColumns.get(fields[i]) + " = ? ";
+            }
+        }
 
+        //sql created
 
+        ArrayList<T> list = jdbcTemplateMy2.selectWithMethod(sql, values, rsHandlerForMany);
+        return list;
     }
 
     public T getById(String login) {

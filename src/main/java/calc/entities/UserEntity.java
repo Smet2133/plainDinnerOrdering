@@ -50,4 +50,10 @@ public class UserEntity {
         this.password = password;
         this.role = role;
     }
+
+
+    @Override
+    public String toString() {
+        return login + " " + password + " " + role;
+    }
 }
