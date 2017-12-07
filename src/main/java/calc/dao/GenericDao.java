@@ -86,6 +86,16 @@ public class GenericDao<T> {
 
     }
 
+    public void delete(T t){
+        try {
+            sql = "DELETE FROM " + table + " WHERE " + idColumn + " = ?";
+            jdbcTemplateMy2.queryWithoutResultset(sql,
+                    new String[]{idField.get(t).toString()});
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<T> getByParameters(Field[] fields, String[] values){
         sql = "SELECT * FROM " + table + " WHERE ";
         if(fields.length < 1){
