@@ -2,6 +2,7 @@ package calc.dao;
 
 import calc.entities.UserEntity;
 import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -10,6 +11,24 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class GenericDaoTest {
+    GenericDao<UserEntity> genericDaoUserEntity = new GenericDao<>(UserEntity.class);
+
+    @Test
+    //@Ignore
+    public void create() throws Exception {
+        UserEntity userEntity = new UserEntity("user2133", "pass2133", "user");
+        genericDaoUserEntity.create(userEntity);
+
+    }
+
+    @Test
+    //@Ignore
+    public void delete() throws Exception {
+        UserEntity userEntity = new UserEntity("user2133", "pass2133", "user");
+        genericDaoUserEntity.delete(userEntity);
+
+    }
+
     @Test
     public void getByParameters() throws Exception {
         GenericDao<UserEntity> genericDaoUser = new GenericDao<>(UserEntity.class);

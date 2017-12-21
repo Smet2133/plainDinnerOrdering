@@ -86,10 +86,14 @@ public class JdbcTemplateMy2 {
         try {
             connection = DriverManager.getConnection(Url, Username, Password);
             statement = connection.prepareStatement(sql);
-            for(int i = 0; i < strings.length; i++){
-                statement.setString(i + 1, strings[i]);
+            if(strings != null) {
+                for (int i = 0; i < strings.length; i++) {
+                    statement.setString(i + 1, strings[i]);
+                }
+                //statement.executeQuery();
             }
-            statement.executeQuery();
+            //else
+                statement.execute();
         }  catch (SQLException e) {
             e.printStackTrace();
         }finally{

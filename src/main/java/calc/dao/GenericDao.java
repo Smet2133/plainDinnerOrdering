@@ -19,6 +19,7 @@ public class GenericDao<T> {
     String table;
     String idColumn;
     Field idField;
+
     HashMap<Field, String> fieldColumns = new HashMap<>();
     ResultSetHandler<T> rsHandlerForOne;
     ResultSetHandler<ArrayList<T>> rsHandlerForMany;
@@ -35,6 +36,7 @@ public class GenericDao<T> {
         for (Field field : clazz.getDeclaredFields()) {
             if(field.isAnnotationPresent(Id.class)){
                 idField = field;
+                idField.setAccessible(true);
                 annotation = field.getAnnotation(Column.class);
                 Column column = (Column)annotation;
                 idColumn = column.name();
@@ -83,6 +85,33 @@ public class GenericDao<T> {
             }
             return list;
         };
+
+    }
+
+    public void create(T t){
+
+        String values = null;
+        try {
+            values = " VALUES ('" + idField.get(t) + "'";
+
+
+            sql = "INSERT INTO " + table + " (" + idColumn + ""; //+ +
+            for(Field field: fieldColumns.keySet()){
+                if(fieldColumns.get(field).equals(idColumn))
+                    continue;
+
+                sql += ", " + fieldColumns.get(field);
+                field.setAccessible(true);
+                values += ", '" + field.get(t) + "'";
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        sql += ")";
+        sql += values + ")";
+
+        jdbcTemplateMy2.queryWithoutResultset(sql, null);
 
     }
 
