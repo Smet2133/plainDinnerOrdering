@@ -1,4 +1,4 @@
-package calc.db;
+package dinnOrder.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

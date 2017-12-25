@@ -1,10 +1,9 @@
-package calc.db;
+package dinnOrder.db;
 
-import calc.Utilities;
+import dinnOrder.Utilities;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class JdbcTemplateMy1 {

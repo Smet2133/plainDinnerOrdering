@@ -2,9 +2,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
+
+
+
+    SumAjax.do
+
+
+
+
+
+    <servlet>
+        <servlet-name> SumAjax.do </servlet-name>
+        <servlet-class>dinnOrder.ajax.SumAjax</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name> Calc_Servlet </servlet-name>
-        <servlet-class>calc.CalcServlet</servlet-class>
+        <servlet-class>dinnOrder.servlets.CalcServlet</servlet-class>
         <init-param>
             <param-name>log4j-properties-location</param-name>
             <param-value>WEB-INF/classes/log4j.properties</param-value>
@@ -12,19 +25,30 @@
     </servlet>
     <servlet>
         <servlet-name> Login_servlet </servlet-name>
-        <servlet-class>calc.LoginServlet</servlet-class>
+        <servlet-class>dinnOrder.servlets.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name> Logout_servlet </servlet-name>
-        <servlet-class>calc.LogoutServlet</servlet-class>
+        <servlet-class>dinnOrder.servlets.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name> Ajax.do </servlet-name>
-        <servlet-class>calc.Ajax</servlet-class>
+        <servlet-class>dinnOrder.ajax.Ajax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> UserView.do </servlet-name>
+        <servlet-class>dinnOrder.servlets.UserViewServlet</servlet-class>
     </servlet>
 
 
-
+    <servlet-mapping>
+        <servlet-name> SumAjax.do </servlet-name>
+        <url-pattern>/SumAjax.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> UserView.do </servlet-name>
+        <url-pattern>/UserView.do</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name> Calc_Servlet </servlet-name>
         <url-pattern>/Calc.do</url-pattern>

@@ -1,8 +1,6 @@
-package calc.dao;
+package dinnOrder.dao;
 
-import calc.entities.UserEntity;
-import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
-import org.junit.Ignore;
+import dinnOrder.entities.UserEntity;
 import org.junit.Test;
 
 import java.lang.reflect.Field;

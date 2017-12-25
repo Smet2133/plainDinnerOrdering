@@ -1,18 +1,13 @@
-package calc;
+package dinnOrder.servlets;
 
-import org.apache.log4j.BasicConfigurator;
+import dinnOrder.Utilities;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 public class CalcServlet extends HttpServlet {
@@ -36,7 +31,7 @@ public class CalcServlet extends HttpServlet {
         HashMap<String, String> hmap = new HashMap<>();
 
 
-        String notification = "";;
+        String notification = "";
         String plusSelected = "";
         String minusSelected = "";
         String multSelected = "";
@@ -85,25 +80,8 @@ public class CalcServlet extends HttpServlet {
         hmap.put("\\$\\{result}", String.valueOf(result));
         hmap.put("\\$\\{userName}", (String)request.getSession().getAttribute("login"));
 
-        printResponse(response, hmap);
+        Utilities.printResponse(response, "html/calc.html", hmap);
 
-    }
-
-    private void printResponse(HttpServletResponse response, HashMap<String, String> hmap) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        String fileString;
-        fileString = Utilities.inputStreamToString(Utilities.inputStreamResources("html/calc.html"));
-        for (String s : hmap.keySet()) {
-            if (hmap.get(s) == null)
-                continue;
-            fileString = fileString.replaceAll(s, hmap.get(s));
-        }
-        out.println(fileString);
-
-
-
-        out.close();
     }
 
 }

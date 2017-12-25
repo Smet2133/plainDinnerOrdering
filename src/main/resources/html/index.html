@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
     <style>
+
+
+
         form {
             border: 3px solid #f1f1f1;
+            width: 50%;
         }
 
         /* Full-width inputs */
@@ -55,6 +59,7 @@
 
         /* Add padding to containers */
         .container {
+
             padding: 16px;
         }
 
@@ -81,6 +86,8 @@
     <link rel="stylesheet" type="text/css">
 </head>
 <body>
+
+<div class="main" align="center">
 <form method="POST"
       action="Authorization.do">
 
@@ -99,9 +106,15 @@
         <label><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="password" required>
 
-        <button type="submit">Login</button>
+        <button type="submit">${action}</button>
     </div>
 
+    <div align="center">
+        <label><a href="/Authorization.do?registration=true">${registrationLink}</a></label>
+    </div>
+    <div align="center">
+        <label><a href="/Authorization.do?registration=false">${loginLink}</a></label>
+    </div>
 
     <!--
     Login:
@@ -114,5 +127,6 @@
     -->
 
 </form>
+</div>
 </body>
 </html>

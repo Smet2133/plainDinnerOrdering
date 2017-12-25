@@ -1,8 +1,8 @@
-package calc.dao;
+package dinnOrder.dao;
 
-import calc.db.JdbcTemplateMy2;
-import calc.db.ResultSetHandler;
-import calc.entities.UserEntity;
+import dinnOrder.db.JdbcTemplateMy2;
+import dinnOrder.db.ResultSetHandler;
+import dinnOrder.entities.UserEntity;
 
 import java.util.ArrayList;
 

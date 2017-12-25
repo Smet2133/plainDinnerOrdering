@@ -1,11 +1,9 @@
-package calc.annotations;
-
+package dinnOrder.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Table {
+public @interface Entity {
 
-    String name();
 }

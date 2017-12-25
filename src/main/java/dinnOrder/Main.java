@@ -1,21 +1,11 @@
-package calc;
+package dinnOrder;
 
-import calc.annotations.Entity;
-import calc.annotations.Table;
-import calc.dao.GenericDao;
-import calc.dao.H2UserDao;
-import calc.db.JDBCconfig;
-import calc.entities.UserEntity;
-import org.apache.log4j.Logger;
+import dinnOrder.dao.GenericDao;
+import dinnOrder.dao.H2UserDao;
+import dinnOrder.entities.UserEntity;
 
 
-import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {

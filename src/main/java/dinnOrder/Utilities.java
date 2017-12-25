@@ -1,6 +1,8 @@
-package calc;
+package dinnOrder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class Utilities {
@@ -41,6 +43,22 @@ public class Utilities {
             e.printStackTrace();
         }
         return contentBuilder.toString();
+    }
+
+
+    public static void printResponse(HttpServletResponse response, String htmlPath, HashMap<String, String> hmap) throws IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        String fileString;
+        fileString = Utilities.inputStreamToString(Utilities.inputStreamResources(htmlPath));
+        for (String s : hmap.keySet()) {
+            if (hmap.get(s) == null)
+                fileString = fileString.replaceAll(s, "");
+            fileString = fileString.replaceAll(s, hmap.get(s));
+        }
+        out.println(fileString);
+        out.close();
     }
 
     public static String fileToString(String filePath){

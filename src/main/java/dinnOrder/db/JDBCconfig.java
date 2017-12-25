@@ -1,4 +1,4 @@
-package calc.db;
+package dinnOrder.db;
 
 public class JDBCconfig {
 

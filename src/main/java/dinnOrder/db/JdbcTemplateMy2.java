@@ -1,10 +1,8 @@
-package calc.db;
+package dinnOrder.db;
 
-import calc.Utilities;
+import dinnOrder.Utilities;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class JdbcTemplateMy2 {
@@ -79,10 +77,11 @@ public class JdbcTemplateMy2 {
         return smthToReturn;
     }
 
-    public void queryWithoutResultset(String sql, String[] strings){
+    public boolean queryWithoutResultset(String sql, String[] strings){
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        boolean success = true;
         try {
             connection = DriverManager.getConnection(Url, Username, Password);
             statement = connection.prepareStatement(sql);
@@ -96,6 +95,7 @@ public class JdbcTemplateMy2 {
                 statement.execute();
         }  catch (SQLException e) {
             e.printStackTrace();
+            success = false;
         }finally{
             //finally block used to close resources
             try{
@@ -110,6 +110,7 @@ public class JdbcTemplateMy2 {
                 se.printStackTrace();
             }//end finally try
         }//end try
+        return success;
     }
 
     public Object queryForObject(String sql, String[] strings){

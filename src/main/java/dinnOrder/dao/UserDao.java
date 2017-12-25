@@ -1,9 +1,8 @@
-package calc.dao;
+package dinnOrder.dao;
 
-import calc.entities.UserEntity;
+import dinnOrder.entities.UserEntity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface UserDao {
     public ArrayList<UserEntity> getByRole(int roleId);

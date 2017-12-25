@@ -1,8 +1,19 @@
-package calc.entities;
+package dinnOrder.entities;
+
+import dinnOrder.annotations.Column;
+import dinnOrder.annotations.Entity;
+import dinnOrder.annotations.Id;
+import dinnOrder.annotations.Table;
 
 import java.util.Date;
 
+
+
+@Entity
+@Table(name = "ORDERS")
 public class OrderEntity {
+    @Id
+    @Column(name = "id")
     private int id;
     private String name;
     private Date date;
@@ -10,9 +21,7 @@ public class OrderEntity {
     private String soup;
     private String salad;
     private String hot;
-    private String hosper;
     private String fixings;
-    private String bread;
     private String drink;
     private int sum;
 

@@ -1,4 +1,4 @@
-package calc;
+package dinnOrder.ajax;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

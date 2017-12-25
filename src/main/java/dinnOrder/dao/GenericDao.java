@@ -1,10 +1,10 @@
-package calc.dao;
+package dinnOrder.dao;
 
-import calc.annotations.Column;
-import calc.annotations.Id;
-import calc.annotations.Table;
-import calc.db.JdbcTemplateMy2;
-import calc.db.ResultSetHandler;
+import dinnOrder.annotations.Column;
+import dinnOrder.annotations.Id;
+import dinnOrder.annotations.Table;
+import dinnOrder.db.JdbcTemplateMy2;
+import dinnOrder.db.ResultSetHandler;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -23,6 +23,7 @@ public class GenericDao<T> {
     HashMap<Field, String> fieldColumns = new HashMap<>();
     ResultSetHandler<T> rsHandlerForOne;
     ResultSetHandler<ArrayList<T>> rsHandlerForMany;
+    ResultSetHandler<Object> rsHandlerForObject;
 
 
     public GenericDao(Class<T> clazz){
@@ -74,7 +75,12 @@ public class GenericDao<T> {
                     entity = clazz.newInstance();
                     for(Field field: entity.getClass().getDeclaredFields()){
                         field.setAccessible(true);
-                        field.set(entity, resultSet.getString(fieldColumns.get(field)));
+                        if(field.getType().equals(String.class)){
+                            field.set(entity, resultSet.getString(fieldColumns.get(field)));
+                        } else if((field.getType().equals(Integer.TYPE))){
+                            field.set(entity, resultSet.getInt(fieldColumns.get(field)));
+                        }
+
                     }
                 } catch (InstantiationException e) {
                     e.printStackTrace();
@@ -86,9 +92,17 @@ public class GenericDao<T> {
             return list;
         };
 
+        rsHandlerForObject = (resultSet) -> {
+            Object obj = null;
+            if(resultSet.next()) {
+                obj = resultSet.getObject(1);
+            }
+            return obj;
+        };
+
     }
 
-    public void create(T t){
+    public boolean create(T t){
 
         String values = null;
         try {
@@ -111,7 +125,7 @@ public class GenericDao<T> {
         sql += ")";
         sql += values + ")";
 
-        jdbcTemplateMy2.queryWithoutResultset(sql, null);
+        return jdbcTemplateMy2.queryWithoutResultset(sql, null);
 
     }
 
@@ -123,6 +137,16 @@ public class GenericDao<T> {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public Object getObjectByQuery(String sql, String[] values){
+        return jdbcTemplateMy2.selectWithMethod(sql, values, rsHandlerForObject);
+    }
+
+    public ArrayList<T> getAll(){
+        sql = "SELECT * FROM " + table ;
+        ArrayList<T> list = jdbcTemplateMy2.selectWithMethod(sql, new String[]{}, rsHandlerForMany);
+        return list;
     }
 
     public ArrayList<T> getByParameters(Field[] fields, String[] values){

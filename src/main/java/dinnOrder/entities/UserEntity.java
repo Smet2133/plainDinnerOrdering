@@ -1,9 +1,9 @@
-package calc.entities;
+package dinnOrder.entities;
 
-import calc.annotations.Column;
-import calc.annotations.Entity;
-import calc.annotations.Id;
-import calc.annotations.Table;
+import dinnOrder.annotations.Column;
+import dinnOrder.annotations.Entity;
+import dinnOrder.annotations.Id;
+import dinnOrder.annotations.Table;
 
 
 @Entity
