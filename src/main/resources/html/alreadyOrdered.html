@@ -12,6 +12,10 @@
 
         }
 
+        span {
+            font-size: 18px;
+        }
+
         select {
             -webkit-appearance: button;
             -webkit-border-radius: 2px;
@@ -110,23 +114,6 @@
         }
     </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-
-        $(document).ready(function () {
-            $("#set").change(function () {
-                $.ajax({
-                    url: "SumAjax.do",
-                    type: "POST",
-                    data: ({set: $("#set").val()}),
-                    success: function (result) {
-                        $("#sum").html(result);
-                    }
-                });
-            });
-        });
-    </script>
-
 
 </head>
 <body>
@@ -134,58 +121,23 @@
     <div align="center">
         <p class="info">Hello, ${username}</p>
 
+        <p class="info">${todayYouMade}</p>
 
-        <form  class="border" method="GET"
-               action="AlreadyOrdered.do">
+        <br>
+        ${currentOrder}
 
-            <span>Набор: </span>
-            <select id="set"  name="set">
-                ${setOptions}
-            </select>
-            <br>
+        <br>
 
-            <span>Салат: </span>
-            <select id="salad"  name="salad">
-                <option value="С огурцом, редисом и яйцом" > С огурцом, редисом и яйцом </option>
-                <option value="Салат с белой рыбой" > Салат с белой рыбой </option>
-                <option value="Салат со свининой" > Салат со свининой </option>
-            </select>
-            <br>
-
-            <span>Горячее: </span>
-            <select id="hot"  name="hot">
-                <option value="Пельмени из баранины" > Пельмени из баранины </option>
-                <option value="Печень по-шотландски" > Печень по-шотландски </option>
-                <option value="Строганов из индейки" > Строганов из индейки </option>
-            </select>
-            <br>
-
-            <span>Гарнир: </span>
-            <select id="fixings"  name="fixings">
-                <option value="Гречка" > Гречка </option>
-                <option value="Рис" > Рис </option>
-                <option value="Макароны" > Макароны </option>
-            </select>
-            <br>
-
-            <span>Напиток: </span>
-            <select id="drink"  name="drink">
-                <option value="Морс" > Морс </option>
-                <option value="Компот" > Компот </option>
-            </select>
-            <br>
-
-            <span class="info" >Итог: </span> <p class="info" id="sum">300</p>
-            <br>
-            <span class="info" >Баланс: </span> <p class="info" id="balance">${balance}</p>
-
-            <button type="submit" ${disabled}>Отправить</button>
-
+        <form class="border" method="POST" action="DeleteOrder.do">
+            <button>Delete</button>
         </form>
 
         <form class="border" method="POST" action="Logout.do">
             <button>Logout</button>
         </form>
+
+
+
     </div>
 </body>
 </html>

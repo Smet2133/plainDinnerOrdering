@@ -5,12 +5,13 @@
 
 
 
-    SumAjax.do
-
-
-
-
-
+    <servlet>
+        <servlet-name> DeleteOrder.do </servlet-name>
+        <servlet-class>dinnOrder.servlets.DeleteOrder</servlet-class>
+    </servlet><servlet>
+        <servlet-name> AlreadyOrdered.do </servlet-name>
+        <servlet-class>dinnOrder.servlets.AlreadyOrderedServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name> SumAjax.do </servlet-name>
         <servlet-class>dinnOrder.ajax.SumAjax</servlet-class>
@@ -41,6 +42,14 @@
     </servlet>
 
 
+    <servlet-mapping>
+        <servlet-name> DeleteOrder.do </servlet-name>
+        <url-pattern>/DeleteOrder.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> AlreadyOrdered.do </servlet-name>
+        <url-pattern>/AlreadyOrdered.do</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name> SumAjax.do </servlet-name>
         <url-pattern>/SumAjax.do</url-pattern>

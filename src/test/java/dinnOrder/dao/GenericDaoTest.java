@@ -15,7 +15,7 @@ public class GenericDaoTest {
     //@Ignore
     public void create() throws Exception {
         UserEntity userEntity = new UserEntity("user2133", "pass2133", "user");
-        genericDaoUserEntity.create(userEntity);
+        genericDaoUserEntity.createWithoutId(userEntity);
 
     }
 
@@ -23,7 +23,7 @@ public class GenericDaoTest {
     //@Ignore
     public void delete() throws Exception {
         UserEntity userEntity = new UserEntity("user2133", "pass2133", "user");
-        genericDaoUserEntity.delete(userEntity);
+        genericDaoUserEntity.deleteById(userEntity);
 
     }
 

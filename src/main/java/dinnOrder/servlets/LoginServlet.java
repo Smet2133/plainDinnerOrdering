@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(isAuthorized(request)){
             //redirect
-            response.sendRedirect("Calc.do");
+            response.sendRedirect("UserView.do");
             return;
         }
 
@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
     private boolean registrationApproved(String login, String password) {
         GenericDao<UserEntity> genericDaoUserEntity = new GenericDao<>(UserEntity.class);
         UserEntity userEntity = new UserEntity(login, password, "user");
-        return genericDaoUserEntity.create(userEntity);
+        return genericDaoUserEntity.createWithId(userEntity);
     }
 
     private boolean loginApproved(String login, String password) {

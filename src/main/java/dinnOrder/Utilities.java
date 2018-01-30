@@ -1,7 +1,13 @@
 package dinnOrder;
 
+import dinnOrder.dao.GenericDao;
+import dinnOrder.entities.OrderEntity;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -43,6 +49,33 @@ public class Utilities {
             e.printStackTrace();
         }
         return contentBuilder.toString();
+    }
+
+
+    public static boolean alreadyOrdered(String username){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date dt = new java.util.Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        dt = c.getTime();
+        String date = "date >= '" + dateFormat.format(new java.util.Date()) + " 00:00:00.000'" +
+                "  AND date < '" + dateFormat.format(dt)  + " 00:00:00.000'";
+
+        String sql = "SELECT NULL FROM orders o WHERE  " + date + " AND user_id = ? AND o.sum < 0";
+        GenericDao<OrderEntity> genericDaoOrderEntity = new GenericDao<>(OrderEntity.class);
+        boolean ordered = genericDaoOrderEntity.getBoolByQuery(sql, new String[]{username});
+        return ordered;
+    }
+
+    public static Date tomorrowDate(Date date){
+        Date dt = date;
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        dt = c.getTime();
+        return dt;
     }
 
 

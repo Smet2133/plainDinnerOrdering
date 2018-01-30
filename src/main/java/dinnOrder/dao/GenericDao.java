@@ -24,6 +24,7 @@ public class GenericDao<T> {
     ResultSetHandler<T> rsHandlerForOne;
     ResultSetHandler<ArrayList<T>> rsHandlerForMany;
     ResultSetHandler<Object> rsHandlerForObject;
+    ResultSetHandler<Boolean> rsHandlerForExistence;
 
 
     public GenericDao(Class<T> clazz){
@@ -100,36 +101,74 @@ public class GenericDao<T> {
             return obj;
         };
 
+        rsHandlerForExistence = (resultSet) -> {
+            return resultSet.next();
+        };
+
     }
 
-    public boolean create(T t){
+
+
+    public boolean createWithId(T t){
 
         String values = null;
         try {
-            values = " VALUES ('" + idField.get(t) + "'";
 
+            values = " VALUES (";
+            sql = "INSERT INTO " + table + " (";
 
-            sql = "INSERT INTO " + table + " (" + idColumn + ""; //+ +
             for(Field field: fieldColumns.keySet()){
-                if(fieldColumns.get(field).equals(idColumn))
-                    continue;
-
-                sql += ", " + fieldColumns.get(field);
+                sql += fieldColumns.get(field) + ",";
                 field.setAccessible(true);
-                values += ", '" + field.get(t) + "'";
+                values += "'" + field.get(t) + "',";
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
+        sql = sql.substring(0, sql.length()-1);
+        values = values.substring(0, values.length()-1);
+
         sql += ")";
         sql += values + ")";
 
         return jdbcTemplateMy2.queryWithoutResultset(sql, null);
-
     }
 
-    public void delete(T t){
+    public boolean createWithoutId(T t){
+
+        String values = null;
+        try {
+
+           // values = " VALUES ('" + idField.get(t) + "'";
+           // sql = "INSERT INTO " + table + " (" + idColumn + ""; //+ +
+            values = " VALUES (";
+            sql = "INSERT INTO " + table + " (";
+
+            for(Field field: fieldColumns.keySet()){
+                if(fieldColumns.get(field).equals(idColumn))
+                    continue;
+                //sql += ", " + fieldColumns.get(field);
+                //field.setAccessible(true);
+                //values += ", '" + field.get(t) + "'";
+                sql += fieldColumns.get(field) + ",";
+                field.setAccessible(true);
+                values += "'" + field.get(t) + "',";
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        sql = sql.substring(0, sql.length()-1);
+        values = values.substring(0, values.length()-1);
+
+        sql += ")";
+        sql += values + ")";
+
+        return jdbcTemplateMy2.queryWithoutResultset(sql, null);
+    }
+
+    public void deleteById(T t){
         try {
             sql = "DELETE FROM " + table + " WHERE " + idColumn + " = ?";
             jdbcTemplateMy2.queryWithoutResultset(sql,
@@ -143,11 +182,21 @@ public class GenericDao<T> {
         return jdbcTemplateMy2.selectWithMethod(sql, values, rsHandlerForObject);
     }
 
+    public boolean getBoolByQuery(String sql, String[] values){
+        return jdbcTemplateMy2.selectWithMethod(sql, values, rsHandlerForExistence);
+    }
+
     public ArrayList<T> getAll(){
         sql = "SELECT * FROM " + table ;
         ArrayList<T> list = jdbcTemplateMy2.selectWithMethod(sql, new String[]{}, rsHandlerForMany);
         return list;
     }
+
+    public ArrayList<T> getByParameters(String sql, String[] values){
+        ArrayList<T> list = jdbcTemplateMy2.selectWithMethod(sql, values, rsHandlerForMany);
+        return list;
+    }
+
 
     public ArrayList<T> getByParameters(Field[] fields, String[] values){
         sql = "SELECT * FROM " + table + " WHERE ";

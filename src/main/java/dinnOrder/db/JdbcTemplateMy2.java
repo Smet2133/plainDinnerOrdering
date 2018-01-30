@@ -24,6 +24,7 @@ public class JdbcTemplateMy2 {
 
         DriverClassName = properties.getProperty("driver");
         Url = s;
+        Url = "jdbc:h2:file:D:/gDisk/netcracker/plainDinnerOrdering/src/main/resources/myDB";
         Username =  properties.getProperty("username");
         Password =  properties.getProperty("password");
         try {
