@@ -45,7 +45,7 @@ public class AlreadyOrderedServlet extends HttpServlet {
 
 
 
-        OrderEntity orderEntity;
+        OrderEntity orderEntity = null;
         String todayYouMade = "";
         String currentOrder = "";
 
@@ -53,35 +53,38 @@ public class AlreadyOrderedServlet extends HttpServlet {
             orderEntity = new OrderEntity();
 
             orderEntity.setUser_id(username);
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
             orderEntity.setDate(dateFormat.format(new java.util.Date()));
-            orderEntity.setSet(request.getParameter("set"));
-            String parseSoup = request.getParameter("set");
-            orderEntity.setSoup(parseSoup.indexOf("Суп") > -1);
-            orderEntity.setSalad(request.getParameter("salad"));
-            orderEntity.setHot(request.getParameter("hot"));
-            orderEntity.setFixings(request.getParameter("fixings"));
-            orderEntity.setDrink(request.getParameter("drink"));
 
-
-            ArrayList<SetEntity> setEntity = null;
             try {
-                setEntity = genericDaoSetEntity.getByParameters(new Field[]{SetEntity.class.getDeclaredField("name")},
-                        new String[]{request.getParameter("set")});
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-            orderEntity.setSum(-setEntity.get(0).getPrice());
+                orderEntity.setSet(request.getParameter("set"));
+                String parseSoup = request.getParameter("set");
+                orderEntity.setSoup(parseSoup.indexOf("Суп") > -1);
+                orderEntity.setSalad(request.getParameter("salad"));
+                orderEntity.setHot(request.getParameter("hot"));
+                orderEntity.setFixings(request.getParameter("fixings"));
+                orderEntity.setDrink(request.getParameter("drink"));
 
+
+                ArrayList<SetEntity> setEntity = null;
+                try {
+                    setEntity = genericDaoSetEntity.getByParameters(new Field[]{SetEntity.class.getDeclaredField("name")},
+                            new String[]{request.getParameter("set")});
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+                orderEntity.setSum(-setEntity.get(0).getPrice());
+
+            } catch (NullPointerException e){
+                response.sendRedirect("UserView.do");
+                return;
+            }
 
             genericDaoOrderEntity.createWithoutId(orderEntity);
 
             todayYouMade = "You have made your order";
         } else {
             todayYouMade = "Today you have already make your order";
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             Date tomorrowDate = Utilities.tomorrowDate(date);
@@ -91,7 +94,12 @@ public class AlreadyOrderedServlet extends HttpServlet {
                     "  AND date < '" + dateFormat.format(tomorrowDate)  + " 00:00:00.000' ";
             sql += " AND sum < 0 AND user_id = ?";
 
-            orderEntity = genericDaoOrderEntity.getByParameters(sql, new String[]{username}).get(0);
+            try {
+                orderEntity = genericDaoOrderEntity.getByParameters(sql, new String[]{username}).get(0);
+            } catch(IndexOutOfBoundsException e) {
+                response.sendRedirect("Authorization.do");
+                return;
+            }
 
 
         }

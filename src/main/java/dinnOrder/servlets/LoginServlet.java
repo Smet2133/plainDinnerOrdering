@@ -32,40 +32,45 @@ public class LoginServlet extends HttpServlet {
         String registrationLink = "";
         String loginLink = "";
 
-        if(request.getSession().getAttribute("registration") != null && request.getSession().getAttribute("registration").equals("true")) {
 
+        //is that registration or authorization?
+        if(request.getSession().getAttribute("registration") != null && request.getSession().getAttribute("registration").equals("true")) {
             loginLink = "Login";
             action = "Registration";
-
             if (request.getParameter("login") != null && request.getParameter("password") != null) {
                 if (registrationApproved(request.getParameter("login"), request.getParameter("password"))) {
                     request.getSession().setAttribute("login", request.getParameter("login"));
                     request.getSession().removeAttribute("registration");
+
+
+
+
                     response.sendRedirect("UserView.do");
                 } else {
                     notification = "Login is used";
                 }
             }
-
-
-
         } else {
-
             registrationLink = "Registration";
             if (request.getParameter("login") == null || request.getParameter("password") == null) {
                 //first time
                 //show plain index.html
-                //printResponse(response, "");
             } else {
                 //not first time
+                //checking login and password
                 if (loginApproved(request.getParameter("login"), request.getParameter("password"))) {
                     request.getSession().setAttribute("login", request.getParameter("login"));
+
+                    //save user and his id for rest api
+                    HashMap<String, String> userSessionsMap = null;
+                    userSessionsMap = (HashMap<String, String>)getServletContext().getAttribute("userSessionsMap");
+                    userSessionsMap.put(request.getSession().getId(), request.getParameter("login"));
+                    getServletContext().setAttribute("userSessionsMap", userSessionsMap);
                     //redirect
                     response.sendRedirect("UserView.do");
                 } else {
                     //add info to session to notify
                     //show index.html
-                    //printResponse(response, "Login or password is incorrect");
                     notification = "Login or password is incorrect";
                 }
             }

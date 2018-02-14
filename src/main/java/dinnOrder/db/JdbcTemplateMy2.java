@@ -17,14 +17,14 @@ public class JdbcTemplateMy2 {
     public JdbcTemplateMy2() {
         Properties properties = new Utilities().getProperties();
 
-        String s = JdbcTemplateMy1.class.getClassLoader().getResource("myDB.mv.db").toString();
+/*        String s = JdbcTemplateMy1.class.getClassLoader().getResource("myDB.mv.db").toString();
         s = s.replaceAll(".mv.db", "");
         s = s.replaceAll("%20", " ");
-        s = "jdbc:h2:" + s;
+        s = "jdbc:h2:" + s;*/
 
         DriverClassName = properties.getProperty("driver");
-        Url = s;
-        Url = "jdbc:h2:file:D:/gDisk/netcracker/plainDinnerOrdering/src/main/resources/myDB";
+//        Url = s;
+        Url = "jdbc:h2:file:C:/Users/Lenovo/Google Drive/netcracker/plainDinnerOrdering/src/main/resources/myDB";
         Username =  properties.getProperty("username");
         Password =  properties.getProperty("password");
         try {

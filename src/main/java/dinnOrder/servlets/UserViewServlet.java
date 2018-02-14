@@ -40,7 +40,6 @@ public class UserViewServlet extends HttpServlet {
         }
 
         HashMap<String, String> hmap = new HashMap<>();
-
         GenericDao<UserEntity> genericDaoUserEntity = new GenericDao<>(UserEntity.class);
         GenericDao<SetEntity> genericDaoSetEntity = new GenericDao<>(SetEntity.class);
         GenericDao<OrderEntity> genericDaoOrderEntity = new GenericDao<>(OrderEntity.class);
@@ -48,17 +47,10 @@ public class UserViewServlet extends HttpServlet {
         UserEntity userEntity = genericDaoUserEntity.getById((String)request.getSession().getAttribute("login"));
         String username = userEntity.getLogin();
 
-
-
         if(Utilities.alreadyOrdered(username)){
             response.sendRedirect("AlreadyOrdered.do");
             return;
         }
-
-
-
-
-
 
         String setOptions = "";
         String disabled = "";

@@ -5,10 +5,34 @@
 
 
 
+    <listener>
+        <listener-class>
+            dinnOrder.ContextListener
+        </listener-class>
+    </listener>
+    <listener>
+        <listener-class>
+            dinnOrder.SessionListener
+        </listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name> OrderREST </servlet-name>
+        <servlet-class>dinnOrder.RESTServlets.OrderREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> MenuREST </servlet-name>
+        <servlet-class>dinnOrder.RESTServlets.MenuREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name> SessionREST </servlet-name>
+        <servlet-class>dinnOrder.RESTServlets.SessionREST</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name> DeleteOrder.do </servlet-name>
         <servlet-class>dinnOrder.servlets.DeleteOrder</servlet-class>
-    </servlet><servlet>
+    </servlet>
+    <servlet>
         <servlet-name> AlreadyOrdered.do </servlet-name>
         <servlet-class>dinnOrder.servlets.AlreadyOrderedServlet</servlet-class>
     </servlet>
@@ -42,6 +66,19 @@
     </servlet>
 
 
+
+    <servlet-mapping>
+        <servlet-name> SessionREST </servlet-name>
+        <url-pattern>/api/session</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> OrderREST </servlet-name>
+        <url-pattern>/api/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name> MenuREST </servlet-name>
+        <url-pattern>/api/menu</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name> DeleteOrder.do </servlet-name>
         <url-pattern>/DeleteOrder.do</url-pattern>

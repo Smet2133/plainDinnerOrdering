@@ -10,15 +10,32 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+
+
+        UserEntity userEntity = new UserEntity();
+        GenericDao<UserEntity> genericDao = new GenericDao<>(UserEntity.class);
+
+        int i = 1;
+        while (i < 1000) {
+            userEntity.setLogin("user" + i + "@mail.ru");
+            userEntity.setPassword("pass" + i);
+            userEntity.setRole("user");
+            genericDao.createWithId(userEntity);
+            i++;
+        }
+
+
+
+/*
         GenericDao<UserEntity> genericDaoUser = new GenericDao(UserEntity.class);
         UserEntity userEntity = genericDaoUser.getById("user@mail.ru");
         System.out.println(userEntity.getLogin() + userEntity.getPassword());
         System.out.println(genericDaoUser.getById("user@mail.ru"));
-//        Entity annotation = UserEntity.class.getDeclaredAnnotation(Entity.class);
+        Entity annotation = UserEntity.class.getDeclaredAnnotation(Entity.class);
 
         System.out.println(new H2UserDao().getByLogin("user@mail.ru"));
         System.out.println(new H2UserDao().getByLoginPassword("user@mail.ru", "pass"));
-        System.out.println();
+        System.out.println();*/
 /*
         final Logger logger = Logger.getLogger(Main.class);
         logger.info("In get");*/

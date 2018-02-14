@@ -34,9 +34,18 @@ public class DeleteOrder extends HttpServlet {
                 "  AND date < '" + dateFormat.format(tomorrowDate)  + " 00:00:00.000' ";
         sql += " AND sum < 0 AND user_id = ?";
 
-        OrderEntity orderEntity = genericDaoOrderEntity.getByParameters(sql,
+
+        try{
+            OrderEntity orderEntity = genericDaoOrderEntity.getByParameters(sql,
                 new String[]{(String)request.getSession().getAttribute("login")}).get(0);
-        genericDaoOrderEntity.deleteById(orderEntity);
+            genericDaoOrderEntity.deleteById(orderEntity);
+        } catch(IndexOutOfBoundsException e) {
+            response.sendRedirect("Authorization.do");
+            return;
+        }
+
+
+
 
         response.sendRedirect("UserView.do");
     }
