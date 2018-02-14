@@ -2,9 +2,7 @@ package dinnOrder.servlets;
 
 import dinnOrder.Utilities;
 import dinnOrder.dao.GenericDao;
-import dinnOrder.entities.OrderEntity;
-import dinnOrder.entities.SetEntity;
-import dinnOrder.entities.UserEntity;
+import dinnOrder.entities.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -53,6 +51,10 @@ public class UserViewServlet extends HttpServlet {
         }
 
         String setOptions = "";
+        String saladOptions = "";
+        String hotOptions = "";
+        String fixingsOptions = "";
+        String drinkOptions = "";
         String disabled = "";
 
         //get balance
@@ -71,10 +73,34 @@ public class UserViewServlet extends HttpServlet {
             setOptions +=   "<option value=\"" + setEntity.getName() + "\" >" + setEntity.getName() + " </option> \n";
         }
 
+        ArrayList<SaladEntity> saladEntities = new GenericDao<>(SaladEntity.class).getAll();
+        for(SaladEntity saladEntity: saladEntities){
+            saladOptions +=   "<option value=\"" + saladEntity.getName() + "\" >" + saladEntity.getName() + " </option> \n";
+        }
 
+        ArrayList<HotEntity> hotEntities = new GenericDao<>(HotEntity.class).getAll();
+        for(HotEntity hotEntity: hotEntities){
+            hotOptions +=   "<option value=\"" + hotEntity.getName() + "\" >" + hotEntity.getName() + " </option> \n";
+        }
+
+        ArrayList<FixingsEntity> fixingsEntities = new GenericDao<>(FixingsEntity.class).getAll();
+        for(FixingsEntity fixingsEntity: fixingsEntities){
+            fixingsOptions +=   "<option value=\"" + fixingsEntity.getName() + "\" >" + fixingsEntity.getName() + " </option> \n";
+        }
+
+        ArrayList<DrinkEntity> drinkEntities = new GenericDao<>(DrinkEntity.class).getAll();
+        for(DrinkEntity drinkEntity: drinkEntities){
+            drinkOptions +=   "<option value=\"" + drinkEntity.getName() + "\" >" + drinkEntity.getName() + " </option> \n";
+        }
 
         hmap.put("\\$\\{username}", username);
         hmap.put("\\$\\{setOptions}", setOptions);
+        hmap.put("\\$\\{saladOptions}", saladOptions);
+        hmap.put("\\$\\{hotOptions}", hotOptions);
+        hmap.put("\\$\\{fixingsOptions}", fixingsOptions);
+        hmap.put("\\$\\{drinkOptions}", drinkOptions);
+
+
         hmap.put("\\$\\{balance}", String.valueOf(balance));
         hmap.put("\\$\\{disabled}", disabled);
 

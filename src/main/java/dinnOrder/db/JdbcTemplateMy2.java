@@ -23,8 +23,9 @@ public class JdbcTemplateMy2 {
         s = "jdbc:h2:" + s;*/
 
         DriverClassName = properties.getProperty("driver");
+        Url = properties.getProperty("url");
 //        Url = s;
-        Url = "jdbc:h2:file:C:/Users/Lenovo/Google Drive/netcracker/plainDinnerOrdering/src/main/resources/myDB";
+//        Url = "jdbc:h2:file:C:/Users/Lenovo/Google Drive/netcracker/plainDinnerOrdering/src/main/resources/myDB";
         Username =  properties.getProperty("username");
         Password =  properties.getProperty("password");
         try {

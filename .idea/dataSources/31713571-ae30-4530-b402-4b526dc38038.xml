@@ -10,8 +10,8 @@
     <schema id="4" parent="2" name="PUBLIC">
       <Visible>1</Visible>
     </schema>
-    <table id="5" parent="4" name="BREADS"/>
-    <table id="6" parent="4" name="DRINKS"/>
+    <table id="5" parent="4" name="DRINKS"/>
+    <table id="6" parent="4" name="FIXINGS"/>
     <table id="7" parent="4" name="HOTS"/>
     <table id="8" parent="4" name="ORDERS"/>
     <table id="9" parent="4" name="ORDERS_COPY_12_12"/>
