@@ -11,27 +11,27 @@ public class H2UserDao implements UserDao {
         JdbcTemplateMy2 jdbcTemplateMy2 = new JdbcTemplateMy2();
         String sql;
 
-        ResultSetHandler<UserEntity> rsHandlerGetUserEntity = (resultSet) -> {
-            UserEntity userEntity = null;
-            if (resultSet.next()) {
-                userEntity = new UserEntity(resultSet.getString("LOGIN"),
-                        resultSet.getString("PASSWORD"), resultSet.getString("ROLE"));
+    ResultSetHandler<UserEntity> rsHandlerGetUserEntity = (resultSet) -> {
+        UserEntity userEntity = null;
+        if (resultSet.next()) {
+            userEntity = new UserEntity(resultSet.getString("LOGIN"),
+                    resultSet.getString("PASSWORD"), resultSet.getString("ROLE"));
 
-            }
-            return userEntity;
-        };
-
-
-    @Override
-    public ArrayList<UserEntity> getByRole(int roleId) {
-        return null;
-    }
+        }
+        return userEntity;
+    };
 
     @Override
     public UserEntity getByLogin(String login) {
         sql = "SELECT LOGIN, PASSWORD, ROLE FROM USERS WHERE LOGIN = ?";
         UserEntity userEntity = jdbcTemplateMy2.selectWithMethod(sql, new String[]{login}, rsHandlerGetUserEntity);
         return userEntity;
+    }
+
+
+    @Override
+    public ArrayList<UserEntity> getByRole(int roleId) {
+        return null;
     }
 
     @Override
