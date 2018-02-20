@@ -1,7 +1,7 @@
 package dinnOrder.entities;
 
 import dinnOrder.annotations.Column;
-import dinnOrder.annotations.Entity;
+import dinnOrder.annotations.*;
 import dinnOrder.annotations.Id;
 import dinnOrder.annotations.Table;
 
